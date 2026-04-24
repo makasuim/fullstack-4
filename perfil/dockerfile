@@ -1,17 +1,15 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
-# Copiamos el pom.xml padre y la carpeta perfil
 COPY pom.xml .
 COPY perfil ./perfil
 
-# Compilamos solo el módulo perfil y sus dependencias
 RUN mvn -f perfil/pom.xml clean package -DskipTests
 
-FROM openjdk:17-jdk-slim
+# Cambiamos a eclipse-temurin que es más estable
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/perfil/target/*.jar app.jar
 
-# Render asignará el puerto dinámicamente, pero informamos el 8082
 EXPOSE 8082
 ENTRYPOINT ["java", "-jar", "app.jar"]
