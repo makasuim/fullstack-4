@@ -1,0 +1,17 @@
+FROM maven:3.8.5-openjdk-17 AS build
+WORKDIR /app
+
+# Copiamos el pom.xml padre y la carpeta auth
+COPY pom.xml .
+COPY auth ./auth
+
+# Compilamos solo el módulo auth y sus dependencias
+RUN mvn -f auth/pom.xml clean package -DskipTests
+
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/auth/target/*.jar app.jar
+
+# Render asignará el puerto dinámicamente, pero informamos el 8081
+EXPOSE 8081
+ENTRYPOINT ["java", "-jar", "app.jar"]
