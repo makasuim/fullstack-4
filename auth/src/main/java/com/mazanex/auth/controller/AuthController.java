@@ -46,4 +46,10 @@ public class AuthController {
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         return authService.eliminar(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+    @PostMapping("/sync-profile")
+    public ResponseEntity<Usuario> syncProfile(@RequestBody Usuario data) {
+    Usuario actualizado = authService.registrarOActualizar(data);
+    return ResponseEntity.ok(actualizado);
+}
 }
