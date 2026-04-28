@@ -13,6 +13,9 @@ public class Usuario {
     private String email;
     private String password;
     private String rol;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String avatarUrl;
 
     public Usuario() {}
