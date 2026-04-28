@@ -13,15 +13,17 @@ public class Usuario {
     private String email;
     private String password;
     private String rol;
+    private String avatarUrl;
 
     public Usuario() {}
 
-    public Usuario(Long id, String nombre, String email, String password, String rol) {
+    public Usuario(Long id, String nombre, String email, String password, String rol, String avatarUrl) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.rol = rol;
+        this.avatarUrl = avatarUrl;
     }
 
     public Long getId() { return id; }
@@ -34,4 +36,6 @@ public class Usuario {
     public void setPassword(String password) { this.password = password; }
     public String getRol() { return rol; }
     public void setRol(String rol) { this.rol = rol; }
+    public String getAvatarUrl() { return avatarUrl; }
+    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
 }
