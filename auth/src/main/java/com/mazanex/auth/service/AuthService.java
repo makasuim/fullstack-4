@@ -32,10 +32,8 @@ public class AuthService {
         return usuarioRepository.findById(id);
     }
 
-    public Usuario login(String email, String password) {
-        return usuarioRepository.findByEmail(email)
-                .filter(u -> u.getPassword().equals(password))
-                .orElse(null);
+    public Usuario login(String identificador, String password) {
+        return validarCredenciales(identificador, password);
     }
 
     public Usuario registrarOActualizar(Usuario data) {
@@ -65,8 +63,9 @@ public class AuthService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario validarCredenciales(String nombre, String password) {
-        return usuarioRepository.findByNombre(nombre)
+    public Usuario validarCredenciales(String identificador, String password) {
+        return usuarioRepository.findByEmail(identificador)
+                .or(() -> usuarioRepository.findByNombre(identificador))
                 .filter(u -> u.getPassword().equals(password))
                 .orElse(null);
     }
