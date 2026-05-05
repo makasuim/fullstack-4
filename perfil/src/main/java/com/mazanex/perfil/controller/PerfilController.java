@@ -17,10 +17,19 @@ public class PerfilController {
     private PerfilService perfilService;
 
     @PostMapping("/sync")
-    public ResponseEntity<Usuario> sincronizar(@RequestBody Usuario usuario) {
-        Usuario guardado = perfilService.guardarPerfil(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
-    }
+    public ResponseEntity<Usuario> sync(@RequestBody Usuario data) {
+    return perfilRepository.findByEmail(data.getEmail())
+        .map(usuarioExistente -> {
+            usuarioExistente.setNombre(data.getNombre());
+            usuarioExistente.setAvatarUrl(data.getAvatarUrl());
+            return ResponseEntity.ok(perfilRepository.save(usuarioExistente));
+        })
+        .orElseGet(() -> {
+            // Si no existe, creamos uno nuevo (limpiamos el ID para que la DB genere uno nuevo)
+            data.setId(null); 
+            return ResponseEntity.status(HttpStatus.CREATED).body(perfilRepository.save(data));
+        });
+}
 
     @GetMapping("/lista")
     public ResponseEntity<List<Usuario>> listar() {
