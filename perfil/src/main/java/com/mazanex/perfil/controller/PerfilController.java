@@ -15,6 +15,7 @@ public class PerfilController {
 
     @Autowired
     private PerfilService perfilService;
+    private UsuarioRepository perfilRepository;
 
     @PostMapping("/sync")
     public ResponseEntity<Usuario> sync(@RequestBody Usuario data) {
