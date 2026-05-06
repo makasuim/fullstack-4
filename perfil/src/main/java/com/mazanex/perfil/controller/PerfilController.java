@@ -1,6 +1,7 @@
 package com.mazanex.perfil.controller;
 
 import com.mazanex.perfil.model.Usuario;
+import com.mazanex.perfil.repository.UsuarioRepository;
 import com.mazanex.perfil.service.PerfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,22 +16,23 @@ public class PerfilController {
 
     @Autowired
     private PerfilService perfilService;
+
+    @Autowired
     private UsuarioRepository perfilRepository;
 
     @PostMapping("/sync")
     public ResponseEntity<Usuario> sync(@RequestBody Usuario data) {
-    return perfilRepository.findByEmail(data.getEmail())
-        .map(usuarioExistente -> {
-            usuarioExistente.setNombre(data.getNombre());
-            usuarioExistente.setAvatarUrl(data.getAvatarUrl());
-            return ResponseEntity.ok(perfilRepository.save(usuarioExistente));
-        })
-        .orElseGet(() -> {
-            // Si no existe, creamos uno nuevo (limpiamos el ID para que la DB genere uno nuevo)
-            data.setId(null); 
-            return ResponseEntity.status(HttpStatus.CREATED).body(perfilRepository.save(data));
-        });
-}
+        return perfilRepository.findByEmail(data.getEmail())
+            .map(usuarioExistente -> {
+                usuarioExistente.setNombre(data.getNombre());
+                // Se eliminó la línea del avatarUrl aquí
+                return ResponseEntity.ok(perfilRepository.save(usuarioExistente));
+            })
+            .orElseGet(() -> {
+                data.setId(null); 
+                return ResponseEntity.status(HttpStatus.CREATED).body(perfilRepository.save(data));
+            });
+    }
 
     @GetMapping("/lista")
     public ResponseEntity<List<Usuario>> listar() {
