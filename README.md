@@ -1,4 +1,4 @@
-# 🚀 Innovatech – Sistema Empresarial de Autenticación y Gestión de Perfiles
+# Innovatech – Sistema Empresarial de Autenticación y Gestión de Perfiles
 
 ---
 
@@ -57,7 +57,7 @@ Cada microservicio funciona de manera autónoma.
 
 ---
 
-### 🔹 Base de Datos
+###Base de Datos
 - Motor relacional **MySQL**
 - Esquemas separados por microservicio
 - Cumplimiento de propiedades **ACID**
@@ -65,7 +65,7 @@ Cada microservicio funciona de manera autónoma.
 
 ---
 
-### 🔹 Infraestructura y Despliegue
+### Infraestructura y Despliegue
 - Uso de **Docker**
 - Contenedores independientes por servicio
 - Preparado para despliegue en entornos escalables
@@ -120,15 +120,13 @@ El siguiente modelo representa la infraestructura completa y la convivencia de l
 
 El proyecto está organizado de forma centralizada en módulos independientes dentro de la raíz principal:
 
-📁 FULLSTACK-4 
-│
-├── 📁 frontend      → Código y lógica de la interfaz de usuario del cliente.
-│
-└── 📁 backend       → Entorno que aloja los microservicios independientes.
-│
-├── 📁 auth    → Microservicio dedicado a la autenticación y seguridad.
-│
-└── 📁 perfil  → Microservicio dedicado a la gestión de datos del usuario.
+```text
+FULLSTACK-4 (Raiz del Monorepo)
+├── frontend/      --> Codigo y logica de la interfaz de usuario del cliente.
+└── backend/       --> Entorno que aloja los microservicios independientes.
+    ├── auth/      --> Microservicio dedicado a la seguridad y login.
+    └── perfil/    --> Microservicio dedicado a los datos de usuario.
+```
 
 ## 🧭 8. Documentación Detallada por Áreas
 
