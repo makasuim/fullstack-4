@@ -21,7 +21,7 @@ La arquitectura fue diseñada siguiendo principios de ingeniería de software co
 
 La solución está compuesta por múltiples capas que se comunican mediante **APIs REST** utilizando formato **JSON**.
 
-### 🔹 Frontend (Next.js + BFF)
+### Frontend (Next.js + BFF)
 - Interfaz de usuario desarrollada con **Next.js**
 - Gestión de estado en el cliente
 - Implementación del patrón **Backend For Frontend (BFF)**
@@ -30,7 +30,7 @@ La solución está compuesta por múltiples capas que se comunican mediante **AP
 
 ---
 
-### 🔹 API Gateway (KrakenD)
+### API Gateway (KrakenD)
 - Punto único de entrada al sistema
 - Funciona como **proxy inverso**
 - Centraliza y enruta solicitudes hacia los microservicios
@@ -39,16 +39,16 @@ La solución está compuesta por múltiples capas que se comunican mediante **AP
 
 ---
 
-### 🔹 Microservicios Backend (Spring Boot)
+### Microservicios Backend (Spring Boot)
 Desarrollados en **Java con Spring Boot**. El sistema está compuesto por:
 
-#### ✔ Servicio de Autenticación
+#### Servicio de Autenticación
 - Registro de usuarios
 - Inicio de sesión
 - Generación y validación de **JWT**
 - Control de acceso basado en roles (**RBAC**)
 
-#### ✔ Servicio de Perfil
+#### Servicio de Perfil
 - Consulta de datos del usuario
 - Actualización de información mediante operaciones HTTP
 - Gestión independiente de datos personales
@@ -120,15 +120,15 @@ El siguiente modelo representa la infraestructura completa y la convivencia de l
 
 El proyecto está organizado de forma centralizada en módulos independientes dentro de la raíz principal:
 
-📁 FULLSTACK-4 (Raíz del Monorepo)
+📁 FULLSTACK-4 
 │
-├── 📁 frontend      --> Código y lógica de la interfaz de usuario del cliente.
+├── 📁 frontend      → Código y lógica de la interfaz de usuario del cliente.
 │
-└── 📁 backend       --> Entorno que aloja los microservicios independientes.
+└── 📁 backend       → Entorno que aloja los microservicios independientes.
 │
-├── 📁 auth     --> Microservicio dedicado a la seguridad y login.
+├── 📁 auth    → Microservicio dedicado a la autenticación y seguridad.
 │
-└── 📁 perfil   --> Microservicio dedicado a los datos de usuario.
+└── 📁 perfil  → Microservicio dedicado a la gestión de datos del usuario.
 
 ## 🧭 8. Documentación Detallada por Áreas
 
