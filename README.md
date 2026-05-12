@@ -1,54 +1,36 @@
-# Sistema de Gestión de Proyectos - Innovatech
+# ⚙️ Innovatech - Infraestructura de Backend 
 
-## Descripción
+##  1. Descripción del Proyecto
+Innovatech es una plataforma empresarial diseñada bajo una **Arquitectura de Microservicios** desacoplada, escalable y de alta disponibilidad. Para responder con precisión y máxima calidad a los requerimientos y alcances acordados con la cátedra, el desarrollo del sistema se ha centralizado estratégicamente en la gestión de identidades, seguridad perimetral y administración de perfiles de usuario. 
 
-Innovatech es una plataforma de gestión de proyectos basada en arquitectura de microservicios. Permite administrar tareas, usuarios, recursos y métricas, mejorando la organización del trabajo y la visibilidad del estado de los proyectos.
-
-El sistema está diseñado para ser escalable, seguro y fácil de mantener.
+La solución resuelve de manera robusta el ciclo completo de autenticación de accesos mediante tokens seguros y la persistencia de datos personales de los usuarios, interactuando de forma armónica con un API Gateway y un entorno frontend moderno. El sistema está diseñado bajo estándares de la ingeniería de software para garantizar el bajo acoplamiento, la seguridad por ocultación de infraestructura y la resiliencia ante fallos.
 
 ---
+##  2. Arquitectura del Sistema
 
-## Arquitectura
+La solución se basa en una arquitectura de microservicios desacoplada. Cada componente cumple una función específica dentro del ecosistema, comunicándose mediante APIs REST sobre canales seguros utilizando mensajería en formato JSON.
 
-La solución se basa en microservicios desplegados en un entorno orquestado. Cada componente cumple una función específica y se comunica mediante APIs REST sobre HTTPS utilizando JSON.
+### Componentes Principales
 
-### Componentes principales
+#### A. Frontend & BFF (Backend For Frontend)
+* **Tecnologías:** Next.js 14 / 15 y TypeScript.
+* **Responsabilidad:** No solo renderiza la interfaz gráfica y gestiona el estado reactivo global mediante **Zustand** en el cliente; además, ejecuta un servidor Node.js en segundo plano que actúa como un **BFF (`[...path]/route.ts`)**. Este componente intercepta las llamadas locales del navegador para mitigar las restricciones de CORS y enmascarar las rutas de producción del backend.
 
-#### Frontend
-- Desarrollado con Next.js 14 y TypeScript  
-- Permite la interacción de los usuarios con el sistema  
-- Consume los servicios backend mediante HTTPS  
+#### B. API Gateway (KrakenD)
+* **Tecnologías:** KrakenD 2.x.
+* **Responsabilidad:** Centraliza y unifica todas las solicitudes legítimas enviadas desde la capa cliente. Actúa como el Proxy Inverso perimetral del ecosistema, encargándose de la ocultación de la infraestructura interna, la orquestación de llamadas y el enrutamiento dinámico de tráfico hacia los microservicios en la nube.
 
-#### API Gateway
-- Implementado con KrakenD  
-- Centraliza las solicitudes del cliente  
-- Valida tokens JWT  
-- Enruta las peticiones a los microservicios  
+#### C. Microservicios (Backend)
+Desarrollados de forma autónoma en Java 21 utilizando el framework **Spring Boot 3.x**:
+* **Auth Service:** Gestiona el ciclo de autenticación, validación de identidades, encriptación de credenciales y la generación, firma y emisión de tokens de seguridad **JWT** bajo el modelo de Control de Acceso Basado en Roles (RBAC).
+* **Perfil Service:** Administra los recursos del perfil de usuario, procesando de manera óptima las solicitudes de lectura y actualizaciones parciales mediante el método HTTP `PATCH`.
 
-#### Microservicios (Backend)
-Desarrollados en Java 21 con Spring Boot:
+#### D. Base de Datos
+* **Tecnologías:** MySQL 8.x (Hospedado en la nube de **Railway**).
+* **Responsabilidad:** Siguiendo los principios de diseño de sistemas distribuidos, cada microservicio interactúa de forma aislada con su propio esquema de base de datos MySQL, garantizando el bajo acoplamiento y el cumplimiento de las propiedades **ACID** (Atomicidad, Consistencia, Aislamiento y Durabilidad).
 
-- **Project Service**
-  - Gestión de proyectos y tareas  
-
-- **Resource Service**
-  - Gestión de recursos y disponibilidad  
-
-- **Auth Service**
-  - Autenticación de usuarios  
-  - Generación de JWT  
-  - Control de acceso basado en roles (RBAC)  
-
-- **Analytics Service**
-  - Generación de métricas e indicadores (KPI)  
-
-#### Base de datos
-- PostgreSQL 16  
-- Cada microservicio posee su propia base de datos  
-
-#### Contenedores y Orquestación
-- Docker para empaquetar los servicios  
-- Kubernetes para despliegue, escalabilidad y alta disponibilidad  
+#### E. Infraestructura y Despliegue
+* **Tecnologías:** Docker y Docker Compose para el empaquetado y la orquestación de servicios en entornos locales y entornos de producción basados en contenedores independientes.
 
 ---
 
