@@ -1,135 +1,123 @@
-# Innovatech – Sistema Empresarial de Autenticación y Gestión de Perfiles
+# Sistema de Gestión de Proyectos - Innovatech
+
+## Descripción
+
+Innovatech es una plataforma de gestión de proyectos basada en arquitectura de microservicios. Permite administrar tareas, usuarios, recursos y métricas, mejorando la organización del trabajo y la visibilidad del estado de los proyectos.
+
+El sistema está diseñado para ser escalable, seguro y fácil de mantener.
 
 ---
 
-## 1. Descripción General
+## Arquitectura
 
-**Innovatech** es una plataforma empresarial desarrollada bajo una arquitectura basada en **microservicios desacoplados**, diseñada para gestionar de forma segura el registro, autenticación y administración de perfiles de usuario.
+La solución se basa en microservicios desplegados en un entorno orquestado. Cada componente cumple una función específica y se comunica mediante APIs REST sobre HTTPS utilizando JSON.
 
-El sistema integra:
-- Un **Frontend moderno**
-- Un **API Gateway**
-- Microservicios independientes
-- Bases de datos separadas por servicio
-- Contenedores para despliegue
+### Componentes principales
 
-La arquitectura fue diseñada siguiendo principios de ingeniería de software como bajo acoplamiento, alta cohesión, escalabilidad y seguridad por ocultación de infraestructura.
+#### Frontend
+- Desarrollado con Next.js 14 y TypeScript  
+- Permite la interacción de los usuarios con el sistema  
+- Consume los servicios backend mediante HTTPS  
 
----
+#### API Gateway
+- Implementado con KrakenD  
+- Centraliza las solicitudes del cliente  
+- Valida tokens JWT  
+- Enruta las peticiones a los microservicios  
 
-## 2. Arquitectura del Sistema
+#### Microservicios (Backend)
+Desarrollados en Java 21 con Spring Boot:
 
-La solución está compuesta por múltiples capas que se comunican mediante **APIs REST** utilizando formato **JSON**.
+- **Project Service**
+  - Gestión de proyectos y tareas  
 
-### Frontend (Next.js + BFF)
-- Interfaz de usuario desarrollada con **Next.js**
-- Gestión de estado en el cliente
-- Implementación del patrón **Backend For Frontend (BFF)**
-- Comunicación segura con el API Gateway
-- Encargado de la experiencia de usuario
+- **Resource Service**
+  - Gestión de recursos y disponibilidad  
 
----
+- **Auth Service**
+  - Autenticación de usuarios  
+  - Generación de JWT  
+  - Control de acceso basado en roles (RBAC)  
 
-### API Gateway (KrakenD)
-- Punto único de entrada al sistema
-- Funciona como **proxy inverso**
-- Centraliza y enruta solicitudes hacia los microservicios
-- Refuerza la seguridad perimetral
-- Oculta la infraestructura interna
+- **Analytics Service**
+  - Generación de métricas e indicadores (KPI)  
 
----
+#### Base de datos
+- PostgreSQL 16  
+- Cada microservicio posee su propia base de datos  
 
-### Microservicios Backend (Spring Boot)
-Desarrollados en **Java con Spring Boot**. El sistema está compuesto por:
-
-#### Servicio de Autenticación
-- Registro de usuarios
-- Inicio de sesión
-- Generación y validación de **JWT**
-- Control de acceso basado en roles (**RBAC**)
-
-#### Servicio de Perfil
-- Consulta de datos del usuario
-- Actualización de información mediante operaciones HTTP
-- Gestión independiente de datos personales
-
-Cada microservicio funciona de manera autónoma.
+#### Contenedores y Orquestación
+- Docker para empaquetar los servicios  
+- Kubernetes para despliegue, escalabilidad y alta disponibilidad  
 
 ---
 
-###Base de Datos
-- Motor relacional **MySQL**
-- Esquemas separados por microservicio
-- Cumplimiento de propiedades **ACID**
-- Despliegue en entorno cloud
+## Seguridad
+
+El sistema implementa:
+
+- Autenticación mediante JWT  
+- Autorización basada en roles (RBAC)  
+- Validación de tokens en el API Gateway  
+- Comunicación segura mediante HTTPS  
 
 ---
 
-### Infraestructura y Despliegue
-- Uso de **Docker**
-- Contenedores independientes por servicio
-- Preparado para despliegue en entornos escalables
-- Arquitectura orientada a la nube
+## Tecnologías utilizadas
+
+| Tecnología     | Versión |
+|----------------|--------|
+| Java           | 21 (LTS) |
+| Spring Boot    | 3.x |
+| PostgreSQL     | 16 |
+| KrakenD        | 2.x |
+| Next.js        | 14 |
+| TypeScript     | 5.x |
+| Docker         | Última |
+| Kubernetes     | Última |
 
 ---
 
-## 3. Seguridad
+## Funcionamiento general
 
-El sistema implementa múltiples mecanismos de protección:
-- Autenticación mediante **JWT**
-- Autorización basada en roles (**RBAC**)
-- Validación de tokens en el API Gateway
-- Comunicación segura mediante **HTTPS**
-- Separación de responsabilidades entre servicios
-
----
-
-## 4. Tecnologías Utilizadas
-
-| Componente | Tecnología |
-|------------|------------|
-| Frontend | Next.js |
-| Backend | Spring Boot |
-| Lenguaje Backend | Java |
-| Base de Datos | MySQL |
-| API Gateway | KrakenD |
-| Contenedores | Docker |
+1. El usuario interactúa con el frontend  
+2. Las solicitudes se envían al API Gateway  
+3. El Gateway valida el token JWT  
+4. La solicitud se redirige al microservicio correspondiente  
+5. El microservicio procesa la información y responde en formato JSON  
 
 ---
 
-## 5. Flujo General del Sistema
+## Características del sistema
 
-1. El usuario interactúa con el **Frontend**.
-2. Las solicitudes se envían al **API Gateway**.
-3. El Gateway valida el token **JWT**.
-4. La solicitud se redirige al microservicio correspondiente.
-5. El microservicio procesa la información.
-6. La respuesta se devuelve en formato **JSON**.
+- Arquitectura desacoplada  
+- Escalabilidad horizontal  
+- Alta disponibilidad  
+- Seguridad centralizada  
+- Resiliencia ante fallos  
 
 ---
 
-## 6. Diagrama de Contenedores (Diseño General)
+## Estructura de los microservicios
 
-El siguiente modelo representa la infraestructura completa y la convivencia de los componentes distribuidos de la plataforma:
+Cada microservicio sigue una estructura estándar:
 
+- Controller: manejo de solicitudes HTTP  
+- Service: lógica de negocio  
+- Repository: acceso a datos  
+- Entity: modelo de base de datos  
+- DTO: transferencia de datos  
+
+---
+
+## Diagrama de Contenedores
+
+>
 > <img width="1919" height="2925" alt="Diagrama de contenedores  (1)" src="https://github.com/user-attachments/assets/82afb61c-b1fd-4fb1-9d3b-dd2d795040c3" />
 
+
 ---
 
-## 7. Estructura del Repositorio (Monorepo)
+## Conclusión
 
-El proyecto está organizado de forma centralizada en módulos independientes dentro de la raíz principal:
-
-```text
-FULLSTACK-4 (Raiz del Monorepo)
-├── frontend/      --> Codigo y logica de la interfaz de usuario del cliente.
-└── backend/       --> Entorno que aloja los microservicios independientes.
-    ├── auth/      --> Microservicio dedicado a la seguridad y login.
-    └── perfil/    --> Microservicio dedicado a los datos de usuario.
-```
-
-## 🧭 8. Documentación Detallada por Áreas
-
-### 💻 [Revisar el Módulo de FRONTEND ──►](./frontend/README.md)
-
-### ⚙️ [Revisar el Módulo de BACKEND ──►](./backend/README.md)
+La arquitectura basada en microservicios permite construir un sistema flexible, escalable y mantenible. La separación de responsabilidades, junto con el uso de tecnologías modernas, facilita la evolución del sistema y su adaptación a nuevas necesidades.
